@@ -55,7 +55,10 @@ async function fetchData() {
         .then(response => response.json())
         .then(data => {
             currentWeather = data;
-            console.log(currentWeather.properties.elevation)
+            console.log(currentWeather.properties.periods[1].shortForecast)
+            console.log(currentWeather.properties.periods[1].temperature)
+            console.log(currentWeather.properties)
+
 
         })
         .catch(error => {
@@ -64,5 +67,15 @@ async function fetchData() {
 
 }
 
+async function pasteCurrentTemp(){
+    let currentTemp = "";
+    await fetchData();
+    currentTemp = document.createElement("h1");
+    currentTemp.innerHTML = currentWeather.properties.periods[0].temperature;
+    let currentTempDisplay = document.querySelector(".currentTemp");
+    currentTempDisplay.append(currentTemp)
+
+}
 //findMe();
 fetchData();
+pasteCurrentTemp();
