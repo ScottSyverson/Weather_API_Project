@@ -12,7 +12,8 @@ const findMe = () => {
     navigator.geolocation.getCurrentPosition(success, error);
 };
 
-
+//! 7-Days Forcast
+//#region 
 let today = new Date();
 let dateString = today.toDateString();
 document.getElementById('todayDate').innerHTML = dateString;
@@ -46,8 +47,10 @@ nextDay = new Date(today);
 nextDay.setDate(today.getDate() + 6);
 dateString = nextDay.toDateString();
 document.getElementById('Day7').innerHTML = dateString;
+//#endregion
 
 let currentWeather = "";
+
 async function fetchData() {
     let url = `https://api.weather.gov/gridpoints/LIX/30,89/forecast?units=us`
 
@@ -58,8 +61,7 @@ async function fetchData() {
             console.log(currentWeather.properties.periods[1].shortForecast)
             console.log(currentWeather.properties.periods[1].temperature)
             console.log(currentWeather.properties)
-
-
+            
         })
         .catch(error => {
             console.log(error)
