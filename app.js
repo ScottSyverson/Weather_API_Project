@@ -1,19 +1,49 @@
+document.addEventListener('DOMContentLoaded', () => {
+    if (navigator.geolocation) {
+        findMe();
+    } else {
+        alert('Geolocation is not supported by your browser.');
+    }
+});
+
+
 // GET COORDINATES
 const findMe = () => {
 
     const success = (position) => {
-        console.log(position);
-        status.textContent = "success";
         const { latitude, longitude } = position.coords;
-        ;
+        fetchPoints(latitude, longitude);
+
+
     };
     const error = () => {
     };
     navigator.geolocation.getCurrentPosition(success, error);
 };
 
+async function fetchPoints(latitude, longitude) {
+
+    let url = `https://api.weather.gov/points/${latitude},${longitude}`
+
+
+    await fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            currentPoints = data;
+            console.log(currentPoints)
+            let {gridId, gridX, gridY } = currentPoints.properties;
+            fetchData(gridId, gridX, gridY)
+
+        })
+        .catch(error => {
+            console.log(error)
+        });
+
+};
+
 //! 7-Days Forcast
 //#region 
+
 let today = new Date();
 let dateString = today.toDateString();
 document.getElementById('todayDate').innerHTML = dateString;
@@ -51,17 +81,20 @@ document.getElementById('Day7').innerHTML = dateString;
 
 let currentWeather = "";
 
-async function fetchData() {
-    let url = `https://api.weather.gov/gridpoints/LIX/30,89/forecast?units=us`
+async function fetchData(gridId, gridX, gridY) {
+
+    let url = `https://api.weather.gov/gridpoints/${gridId}/${gridX},${gridY}/forecast`
 
     await fetch(url)
         .then(response => response.json())
         .then(data => {
+
             currentWeather = data;
-            console.log(currentWeather.properties.periods[1].shortForecast)
-            console.log(currentWeather.properties.periods[1].temperature)
-            console.log(currentWeather.properties)
-            
+            console.log(currentWeather);
+            ///console.log(currentWeather.properties.dewpoint) 
+            //console.log(currentWeather.properties) 
+            let input = currentWeather.properties.periods[0].temperature;
+            pasteCurrentTemp(input)
         })
         .catch(error => {
             console.log(error)
@@ -69,15 +102,14 @@ async function fetchData() {
 
 }
 
-async function pasteCurrentTemp(){
-    let currentTemp = "";
-    await fetchData();
+function pasteCurrentTemp(input) {
+    let currentTemp = "";  
     currentTemp = document.createElement("h1");
-    currentTemp.innerHTML = currentWeather.properties.periods[0].temperature;
+    currentTemp.innerHTML = input + "\u00B0 ";
     let currentTempDisplay = document.querySelector(".currentTemp");
-    currentTempDisplay.append(currentTemp)
-
+    currentTempDisplay.append(currentTemp);
 }
-//findMe();
-fetchData();
-pasteCurrentTemp();
+
+
+
+

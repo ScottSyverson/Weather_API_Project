@@ -1,0 +1,19 @@
+.header{
+    text-align: center;
+}
+
+.weekForecast{
+    text-align: center;
+}
+
+ul{
+    list-style-type: none;
+}
+
+.oddDay{
+    background-color: lightskyblue;
+}
+
+.evenDay{
+    background-color: rgb(228, 228, 159);
+}
