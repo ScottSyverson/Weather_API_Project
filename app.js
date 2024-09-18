@@ -90,10 +90,11 @@ async function fetchData(gridId, gridX, gridY) {
 
             currentWeather = data;
             console.log(currentWeather);
-            ///console.log(currentWeather.properties.dewpoint) 
             //console.log(currentWeather.properties) 
             let input = currentWeather.properties.periods[0].temperature;
             pasteCurrentTemp(input)
+            let input2 = currentWeather.properties.periods[2].temperature;
+            pasteCurrentTemp(input2)
 
 
 //this is where you are working
@@ -102,7 +103,8 @@ async function fetchData(gridId, gridX, gridY) {
             console.log(currentWeather.properties.periods[0].shortForecast)
             let curCon=currentWeather.properties.periods[0].shortForecast
             pasteDataCondition(curCon)
-            pasteDataConditionTrial(curCon)
+            curCon=currentWeather.properties.periods[2].shortForecast
+            pasteDataCondition2(curCon)
         })
 
         .catch(error => {
@@ -127,11 +129,11 @@ function pasteDataCondition(input){
     conditionDisplay.append(currentCondition);
 }
 
-function pasteDataConditionTrial(input){
+function pasteDataCondition2(input){
     let currentCondition = "";
     currentCondition = document.createElement("h3");
     currentCondition.innerHTML = input 
-    let conditionDisplay = document.querySelector(".tryThis5");
+    let conditionDisplay = document.querySelector(".condition2");
     conditionDisplay.append(currentCondition);
 }
 
