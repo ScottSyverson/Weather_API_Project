@@ -91,28 +91,22 @@ async function fetchData(gridId, gridX, gridY) {
             currentWeather = data;
             console.log(currentWeather);
             //console.log(currentWeather.properties) 
-            let input = currentWeather.properties.periods[0].temperature;
-            pasteCurrentTemp(input)
-            /*
-            let curCon = currentWeather.properties.periods[0].shortForecast
-            pasteDataCondition(curCon)*/
-
-            /*curCon = currentWeather.properties.periods[2].shortForecast
-            pasteDataCondition2(curCon, i)*/
-
-            //this is where you are working
-
+            let CurTemp = currentWeather.properties.periods[0].temperature;
+            pasteCurrentTemp(CurTemp)
+            
             let i = 0;
             while (i < 14) {
-
                 curCon = currentWeather.properties.periods[i].shortForecast
                 pasteDataCondition(curCon, i)
+
+                curConIcon = currentWeather.properties.periods[i].icon
+                pasteDataConditionIcon(curConIcon,i)
+
+                console.log(curConIcon)
 
                 i++;
                 i++;
             }
-
-
         })
 
         .catch(error => {
@@ -128,16 +122,7 @@ function pasteCurrentTemp(input) {
     let currentTempDisplay = document.querySelector(".currentTemp");
     currentTempDisplay.append(currentTemp);
 }
-/*
-function pasteDataCondition(input) {
-    let currentCondition = "";
-    currentCondition = document.createElement("h3");
-    currentCondition.innerHTML = input
-    let conditionDisplay = document.querySelector(".condition0");
-    conditionDisplay.append(currentCondition);
 
-}
-*/
 function pasteDataCondition(input, num) {
     let currentCondition = "";
     currentCondition = document.createElement("h3");
@@ -147,6 +132,11 @@ function pasteDataCondition(input, num) {
     conditionDisplay.append(currentCondition);
 }
 
+function pasteDataConditionIcon(input, num) {
+    let x = num
+    let conditionDisplay = document.querySelector(`.conditionIcon${x}`)
+    conditionDisplay.src=input;
+}
 
 
 
