@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-
 // GET COORDINATES
 const findMe = () => {
 
@@ -95,7 +94,17 @@ async function fetchData(gridId, gridX, gridY) {
             //console.log(currentWeather.properties) 
             let input = currentWeather.properties.periods[0].temperature;
             pasteCurrentTemp(input)
+
+
+//this is where you are working
+
+            console.log("testing")
+            console.log(currentWeather.properties.periods[0].shortForecast)
+            let curCon=currentWeather.properties.periods[0].shortForecast
+            pasteDataCondition(curCon)
+            pasteDataConditionTrial(curCon)
         })
+
         .catch(error => {
             console.log(error)
         });
@@ -110,6 +119,19 @@ function pasteCurrentTemp(input) {
     currentTempDisplay.append(currentTemp);
 }
 
+function pasteDataCondition(input){
+    let currentCondition = "";
+    currentCondition = document.createElement("h3");
+    currentCondition.innerHTML = input 
+    let conditionDisplay = document.querySelector(".condition");
+    conditionDisplay.append(currentCondition);
+}
 
-
+function pasteDataConditionTrial(input){
+    let currentCondition = "";
+    currentCondition = document.createElement("h3");
+    currentCondition.innerHTML = input 
+    let conditionDisplay = document.querySelector(".tryThis5");
+    conditionDisplay.append(currentCondition);
+}
 
