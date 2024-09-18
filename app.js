@@ -30,7 +30,7 @@ async function fetchPoints(latitude, longitude) {
         .then(data => {
             currentPoints = data;
             console.log(currentPoints)
-            let {gridId, gridX, gridY } = currentPoints.properties;
+            let { gridId, gridX, gridY } = currentPoints.properties;
             fetchData(gridId, gridX, gridY)
 
         })
@@ -93,18 +93,26 @@ async function fetchData(gridId, gridX, gridY) {
             //console.log(currentWeather.properties) 
             let input = currentWeather.properties.periods[0].temperature;
             pasteCurrentTemp(input)
-            let input2 = currentWeather.properties.periods[2].temperature;
-            pasteCurrentTemp(input2)
+            /*
+            let curCon = currentWeather.properties.periods[0].shortForecast
+            pasteDataCondition(curCon)*/
+
+            /*curCon = currentWeather.properties.periods[2].shortForecast
+            pasteDataCondition2(curCon, i)*/
+
+            //this is where you are working
+
+            let i = 0;
+            while (i < 14) {
+
+                curCon = currentWeather.properties.periods[i].shortForecast
+                pasteDataCondition(curCon, i)
+
+                i++;
+                i++;
+            }
 
 
-//this is where you are working
-
-            console.log("testing")
-            console.log(currentWeather.properties.periods[0].shortForecast)
-            let curCon=currentWeather.properties.periods[0].shortForecast
-            pasteDataCondition(curCon)
-            curCon=currentWeather.properties.periods[2].shortForecast
-            pasteDataCondition2(curCon)
         })
 
         .catch(error => {
@@ -114,26 +122,31 @@ async function fetchData(gridId, gridX, gridY) {
 }
 
 function pasteCurrentTemp(input) {
-    let currentTemp = "";  
+    let currentTemp = "";
     currentTemp = document.createElement("h1");
     currentTemp.innerHTML = input + "\u00B0 ";
     let currentTempDisplay = document.querySelector(".currentTemp");
     currentTempDisplay.append(currentTemp);
 }
-
-function pasteDataCondition(input){
+/*
+function pasteDataCondition(input) {
     let currentCondition = "";
     currentCondition = document.createElement("h3");
-    currentCondition.innerHTML = input 
-    let conditionDisplay = document.querySelector(".condition");
+    currentCondition.innerHTML = input
+    let conditionDisplay = document.querySelector(".condition0");
+    conditionDisplay.append(currentCondition);
+
+}
+*/
+function pasteDataCondition(input, num) {
+    let currentCondition = "";
+    currentCondition = document.createElement("h3");
+    currentCondition.innerHTML = input
+    let x = num
+    let conditionDisplay = document.querySelector(`.condition${x}`)
     conditionDisplay.append(currentCondition);
 }
 
-function pasteDataCondition2(input){
-    let currentCondition = "";
-    currentCondition = document.createElement("h3");
-    currentCondition.innerHTML = input 
-    let conditionDisplay = document.querySelector(".condition2");
-    conditionDisplay.append(currentCondition);
-}
+
+
 
