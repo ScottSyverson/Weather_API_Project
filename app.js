@@ -12,8 +12,6 @@ const findMe = () => {
     const success = (position) => {
         const { latitude, longitude } = position.coords;
         fetchPoints(latitude, longitude);
-
-
     };
     const error = () => {
     };
@@ -24,7 +22,6 @@ async function fetchPoints(latitude, longitude) {
 
     let url = `https://api.weather.gov/points/${latitude},${longitude}`
 
-
     await fetch(url)
         .then(response => response.json())
         .then(data => {
@@ -32,6 +29,8 @@ async function fetchPoints(latitude, longitude) {
             console.log(currentPoints)
             let { gridId, gridX, gridY } = currentPoints.properties;
             fetchData(gridId, gridX, gridY)
+            let curLoc = currentPoints.properties.relativeLocation.properties.city
+            pasteLocation(curLoc)
 
         })
         .catch(error => {
@@ -96,17 +95,37 @@ async function fetchData(gridId, gridX, gridY) {
             
             let i = 0;
             while (i < 14) {
-                curCon = currentWeather.properties.periods[i].shortForecast
+                curCon = currentWeather.properties.periods[i].shortForecast;
                 pasteDataCondition(curCon, i)
 
                 curConIcon = currentWeather.properties.periods[i].icon
                 pasteDataConditionIcon(curConIcon,i)
+                
+                curHigh = currentWeather.properties.periods[i].temperature
+                
+                pasteHigh(curHigh,i)
+                i = i + 2
 
-                console.log(curConIcon)
-
-                i++;
-                i++;
             }
+
+            let c = 1;
+            while (c < 14){
+                curLow = currentWeather.properties.periods[c].temperature;
+                console.log(curLow)
+
+                pasteLow(curLow,c)
+                c=c+2
+
+            }
+
+
+
+
+
+
+
+
+
         })
 
         .catch(error => {
@@ -114,6 +133,15 @@ async function fetchData(gridId, gridX, gridY) {
         });
 
 }
+
+function pasteLocation(input) {
+    let location = "";
+    location = document.createElement("h1");
+    location.innerHTML = input;
+    let locationDisplay = document.querySelector(".location");
+    locationDisplay.append(location);
+}
+
 
 function pasteCurrentTemp(input) {
     let currentTemp = "";
@@ -137,6 +165,20 @@ function pasteDataConditionIcon(input, num) {
     let conditionDisplay = document.querySelector(`.conditionIcon${x}`)
     conditionDisplay.src=input;
 }
-
-
+function pasteHigh(input, num) {
+    let currentCondition = "";
+    currentCondition = document.createElement("h3");
+    currentCondition.innerHTML = "High: " + input
+    let x = num
+    let conditionDisplay = document.querySelector(`.temp${x}`)
+    conditionDisplay.append(currentCondition);
+}
+function pasteLow(input, num) {
+    let currentCondition = "";
+    currentCondition = document.createElement("h3");
+    currentCondition.innerHTML = "Low: " + input
+    let x = num
+    let conditionDisplay = document.querySelector(`.temp${x}`)
+    conditionDisplay.append(currentCondition);
+}
 
