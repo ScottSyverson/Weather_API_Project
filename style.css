@@ -1,21 +1,24 @@
-.header{
-    text-align: center;
+
+.page{
+    background-color: navy;
 }
 
+.header{
+    text-align: center;
+    background-color: rgb(14, 149, 233);
+    margin-bottom: 15px;
+}
 .weekForecast{
     text-align: center;
 }
 
-ul{
-    list-style-type: none;
+.currentTemp h1{
+    font-size: 150px;
 }
 
-.oddDay{
+.day{
+    padding-top: 15px;
+    padding-bottom: 20px;
+    margin-bottom: 15px;
     background-color: lightskyblue;
 }
-
-.evenDay{
-    background-color: rgb(228, 228, 159);
-}
-
-
