@@ -92,39 +92,31 @@ async function fetchData(gridId, gridX, gridY) {
             //console.log(currentWeather.properties) 
             let CurTemp = currentWeather.properties.periods[0].temperature;
             pasteCurrentTemp(CurTemp)
-            
+
             let i = 0;
             while (i < 14) {
                 curCon = currentWeather.properties.periods[i].shortForecast;
                 pasteDataCondition(curCon, i)
 
                 curConIcon = currentWeather.properties.periods[i].icon
-                pasteDataConditionIcon(curConIcon,i)
-                
+                pasteDataConditionIcon(curConIcon, i)
+
                 curHigh = currentWeather.properties.periods[i].temperature
-                
-                pasteHigh(curHigh,i)
+
+                pasteHigh(curHigh, i)
                 i = i + 2
 
             }
 
             let c = 1;
-            while (c < 14){
+            while (c < 14) {
                 curLow = currentWeather.properties.periods[c].temperature;
                 console.log(curLow)
 
-                pasteLow(curLow,c)
-                c=c+2
+                pasteLow(curLow, c)
+                c = c + 2
 
             }
-
-
-
-
-
-
-
-
 
         })
 
@@ -141,7 +133,6 @@ function pasteLocation(input) {
     let locationDisplay = document.querySelector(".location");
     locationDisplay.append(location);
 }
-
 
 function pasteCurrentTemp(input) {
     let currentTemp = "";
@@ -163,7 +154,7 @@ function pasteDataCondition(input, num) {
 function pasteDataConditionIcon(input, num) {
     let x = num
     let conditionDisplay = document.querySelector(`.conditionIcon${x}`)
-    conditionDisplay.src=input;
+    conditionDisplay.src = input;
 }
 function pasteHigh(input, num) {
     let currentCondition = "";
